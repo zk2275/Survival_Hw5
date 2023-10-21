@@ -12,19 +12,40 @@ Construct 95% CI for the hazard ratio from a PH model shown in the follow table 
 
 ![](P1.png)
 
+According to the table, the parameter estimate and the standard error are -1.628 and 0.433, respectively.  
+
+We've already learned that the 95% CI confidence interval for the coefficient estimates is as follows: 
+
+$$[\hat{\beta}-z_{0.975}se(\hat{\beta}),\hat{\beta}+z_{0.975}se(\hat{\beta})]$$
+
+
+Then, from $\frac{h(t|Z=1)}{h(t|Z=0)} = e^{\beta}$, we can obtain the hazard ratio as 0.196, with its 95% CI: 
+
+$$[e^{\hat{\beta}-z_{0.975}se(\hat{\beta})},e^{\hat{\beta}+z_{0.975}se(\hat{\beta})}]$$
 
 
 ```{r}
-
+est <- -1.628
+se <- 0.433
+z <- qnorm(0.975)
+lq <- exp(est-z*se)
+uq <- exp(est+z*se)
+lq;uq
 ```
+
+So, the 95% CI for the hazard ratio is $[0.084,0.459]$.
 
 # Problem2
 
 The observed survival data $(T_i, \Delta_i,Z_i ) i =1,2,3,4,5,6$ are (16,1,1), (20,0,1), (12,1,0), (14,0,0), (11,1,0), (9,1,1). Please construct the partial likelihood.
 
-```{r}
+$$L_p (\beta) = \prod_{i=1}^n\{\frac{e^{\beta z_i}}{\sum_{l \in R(t_i) e^{\beta^{'} z_i}}}\}^{\Delta_i}$$
+$$\because \Delta_1=\Delta_3=\Delta_5=\Delta_6=1$$
+$$\because \Delta_2=\Delta_4=0,n=6$$
 
-```
+$$\therefore L_p (\beta) =\frac{e^{\beta}}{e^{\beta}+e^{\beta}} \frac{1}{1+1+e^{\beta}+e^{\beta}} \frac{1}{1+2+2e^{\beta}} \frac{e^{\beta}}{e^{\beta}+3+2e^{\beta}}$$
+
+$$=\frac{1}{2} \frac{1}{2+2e^{\beta}} \frac{1}{3+2e^{\beta}} \frac{e^{\beta}}{3+3e^{\beta}}$$
 
 # Problem3
 
